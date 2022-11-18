@@ -24,7 +24,15 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is being developed just for me to get used to the NestJS framework. So, there are no more purposes.
+
+
+## Technologies
+
+- NodeJS
+- NestJS
+- TypeScript
+- SQLite
 
 ## Installation
 
