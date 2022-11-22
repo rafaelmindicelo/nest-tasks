@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { createTaskDTO } from './dto/create-task.dto';
-import { TaskDTO } from './dto/task.dto';
+import { updateTaskDTO } from './dto/update-task.dto';
 import { TaskService } from './task.service';
 
 @Controller('task')
@@ -23,7 +23,7 @@ export class TaskController {
   }
   
   @Patch(':id')
-  async updateTaskById(@Param('id') id: string, @Body() data: TaskDTO) {
+  async updateTaskById(@Param('id') id: string, @Body() data: updateTaskDTO) {
     return this.taskService.updateTaskById(id, data);
   }
 
