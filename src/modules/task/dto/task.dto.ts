@@ -1,7 +1,5 @@
-import internal from "stream";
-
 export type TaskDTO = {
-  id? : number;
+  id: number;
   description: string;
   createdAt : Date
 }

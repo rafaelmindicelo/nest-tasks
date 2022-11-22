@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
-import { TaskDTO } from './task.dto';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { createTaskDTO } from './dto/create-task.dto';
+import { TaskDTO } from './dto/task.dto';
 import { TaskService } from './task.service';
 
 @Controller('task')
@@ -7,7 +8,7 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  async create(@Body() data: TaskDTO) {
+  async create(@Body() data: createTaskDTO) {
     return this.taskService.create(data);
   }
 
@@ -17,18 +18,18 @@ export class TaskController {
   }
 
   @Get(':id')
-  async findTaskById(@Param() id: string) {
+  async findTaskById(@Param('id') id: string) {
     return this.taskService.findTaskById(id);
   }
   
   @Patch(':id')
-  async updateTaskById(@Param() id: string, @Body() data: TaskDTO) {
+  async updateTaskById(@Param('id') id: string, @Body() data: TaskDTO) {
     return this.taskService.updateTaskById(id, data);
   }
 
-  @HttpCode(204)
   @Delete(':id')
-  async deleteTaskById(@Param() id: string) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteTaskById(@Param('id') id: string) {
     return this.taskService.deleteTaskById(id);
   }
 }

@@ -1,13 +1,15 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { TaskDTO } from './task.dto';
+import { createTaskDTO } from './dto/create-task.dto';
+import { TaskDTO } from './dto/task.dto';
+import { updateTaskDTO } from './dto/update-task.dto';
 
 @Injectable()
 export class TaskService {
 
   constructor(private prisma: PrismaService) {}
 
-  async create(data: TaskDTO) {
+  async create(data: createTaskDTO) {
     const taskExists = await this.prisma.task.findFirst({
       where: {
         description: data.description
@@ -34,7 +36,7 @@ export class TaskService {
   async findTaskById(id: string): Promise<TaskDTO> {
     const task = await this.prisma.task.findFirst({
       where: {
-        id: Number(Object.values(id))
+        id: Number(id)
       }
     });
 
@@ -45,10 +47,10 @@ export class TaskService {
     return task;
   }
 
-  async updateTaskById(id: string, data: TaskDTO): Promise<TaskDTO> {
+  async updateTaskById(id: string, data: updateTaskDTO): Promise<TaskDTO> {
     const taskExists = await this.prisma.task.findFirst({
       where: {
-        id: Number(Object.values(id))
+        id: Number(id)
       }
     });
 
@@ -58,7 +60,7 @@ export class TaskService {
 
     const updateTask = await this.prisma.task.update({
       where: {
-        id: Number(Object.values(id))
+        id: Number(id)
       },
       data: {
         description: data.description
@@ -71,7 +73,7 @@ export class TaskService {
   async deleteTaskById(id: string) {
     const taskExists = await this.prisma.task.findFirst({
       where: {
-        id: Number(Object.values(id))
+        id: Number(id)
       }
     });
 
@@ -82,7 +84,7 @@ export class TaskService {
     try {
       await this.prisma.task.delete({
         where: {
-          id: Number(Object.values(id))
+          id: Number(id)
         }
       })
     } catch (error) {
