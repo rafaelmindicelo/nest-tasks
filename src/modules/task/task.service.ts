@@ -46,7 +46,7 @@ export class TaskService {
   }
 
   async updateTaskById(id: string, data: updateTaskDTO): Promise<TaskDTO> {
-    const taskExists = await this.prisma.task.findFirst({
+    let taskExists = await this.prisma.task.findFirst({
       where: {
         id: Number(id)
       }
@@ -54,6 +54,18 @@ export class TaskService {
 
     if(!taskExists){
       throw new NotFoundException ('Task does not exist.')
+    }
+
+    if(data.title) {
+      taskExists = await this.prisma.task.findFirst({
+        where: {
+          title: data.title
+        }
+      });
+  
+      if(taskExists){
+        throw new BadRequestException ('Task already exists.')
+      }
     }
 
     const updateTask = await this.prisma.task.update({
