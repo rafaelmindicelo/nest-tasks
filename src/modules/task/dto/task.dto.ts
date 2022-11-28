@@ -1,5 +1,8 @@
 export type TaskDTO = {
   id: number;
+  title: string;
   description: string;
-  createdAt : Date
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

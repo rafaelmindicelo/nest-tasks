@@ -20,8 +20,6 @@ export class TaskService {
       throw new BadRequestException ('Task already exists')
     }
 
-    data.createdAt = new Date ();
-
     const task = await this.prisma.task.create({
       data
     })
@@ -63,7 +61,10 @@ export class TaskService {
         id: Number(id)
       },
       data: {
-        description: data.description
+        title: data.title,
+        description: data.description,
+        status: data.status,
+        updatedAt: new Date()
       }
     });
 
