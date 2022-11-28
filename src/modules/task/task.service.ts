@@ -12,7 +12,7 @@ export class TaskService {
   async create(data: createTaskDTO) {
     const taskExists = await this.prisma.task.findFirst({
       where: {
-        description: data.description
+        title: data.title
       }
     });
 
